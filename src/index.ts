@@ -8,34 +8,22 @@ import {
   errorServerMiddleware,
 } from "./middlewares/error.middleware";
 
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-const PORT = 3000;
+db();
 
-async function init() {
-  try {
-    await db();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-    const app = express();
+app.use("/api", routes);
 
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
+// Inisialisasi Swagger UI
+docs(app);
 
-    app.use("/api", routes);
+app.use(errorNotFoundMiddleware);
+app.use(errorServerMiddleware);
 
-    // Inisialisasi Swagger UI
-    docs(app);
-
-    app.use(errorNotFoundMiddleware);
-    app.use(errorServerMiddleware);
-
-    // http://localhost:3000/api
-
-    app.listen(PORT, () => {
-      console.log(`Server is running at http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-init();
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
+});
