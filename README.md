@@ -4,8 +4,8 @@ Cara eksekusi program projek ini
 2. pastikan juga data cloudinary anda benar untuk upload file ke akun cloudinary anda
 3. lakukan npx ts-node secret.ts pada terminal, untuk mendapatkan SECRET, lalu masukan kode tersebut ke .env pada bagian SECRET
 
-4. npm run docs, untuk melakukan API documentation
-5. npm run dev, untuk memulai server
+4. npm run docs, untuk melakukan API documentation swagger UI
+5. npm run index, untuk memulai server
 6. buka http://localhost:3000/docs pada browser anda, API Documentation
 
 buka postman

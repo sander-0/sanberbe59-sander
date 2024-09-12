@@ -4,8 +4,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.ts",
-    "docs": "ts-node src/docs/swagger.ts"
+    "index": "nodemon src/index.ts",
+    "docs": "ts-node src/docs/swagger.ts",
+    "dev": "ts-node-dev src/index.ts",
+    "start": "ts-node src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -29,11 +31,11 @@
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5",
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.6",
-    "tsconfig-paths": "^4.2.0"
+    "@types/jsonwebtoken": "^9.0.6"
   }
 }
