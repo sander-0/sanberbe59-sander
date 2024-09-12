@@ -5,7 +5,7 @@ export interface IRequestWithUser extends Request {
   user?: IUserToken;
 }
 
-export default (req: Request, res: Response, next: NextFunction) => {
+const authMiddleware = (req: IRequestWithUser, res: Response, next: NextFunction) => {
   const authorization = req.headers?.authorization;
 
   if (!authorization) {
@@ -37,3 +37,5 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
   next();
 };
+
+export default authMiddleware;
