@@ -17,7 +17,7 @@ export default {
      #swagger.requestBody = {
       required: true,
       schema: {
-        $ref: "#/components/schemas/CategoryCreateRequest"
+        $ref: "#/components/schemas/CategoryRequest"
       }
      }
      */ 
@@ -84,7 +84,7 @@ export default {
      #swagger.requestBody = {
       required: true,
       schema: {
-        $ref: "#/components/schemas/CategoryCreateRequest"
+        $ref: "#/components/schemas/CategoryRequest"
       }
      }
     */   

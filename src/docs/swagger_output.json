@@ -50,12 +50,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryCreateRequest"
+                "$ref": "#/components/schemas/CategoryRequest"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryCreateRequest"
+                "$ref": "#/components/schemas/CategoryRequest"
               }
             }
           }
@@ -120,12 +120,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryCreateRequest"
+                "$ref": "#/components/schemas/CategoryRequest"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryCreateRequest"
+                "$ref": "#/components/schemas/CategoryRequest"
               }
             }
           }
@@ -199,12 +199,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProductCreateRequest"
+                "$ref": "#/components/schemas/ProductRequest"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/ProductCreateRequest"
+                "$ref": "#/components/schemas/ProductRequest"
               }
             }
           }
@@ -269,12 +269,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProductCreateRequest"
+                "$ref": "#/components/schemas/ProductRequest"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/ProductCreateRequest"
+                "$ref": "#/components/schemas/ProductRequest"
               }
             }
           }
@@ -542,7 +542,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Order"
+                "$ref": "#/components/schemas/OrderRequest"
               }
             }
           }
@@ -556,6 +556,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -575,6 +578,87 @@
       }
     },
     "schemas": {
+      "CategoryRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Aksesoris"
+          }
+        },
+        "xml": {
+          "name": "CategoryRequest"
+        }
+      },
+      "ProductRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Kaos Pria"
+          },
+          "description": {
+            "type": "string",
+            "example": "Kaos Hitam"
+          },
+          "images": {
+            "type": "array",
+            "example": [
+              "https://res.cloudinary.com/drkp2wxz4/image/upload/v1724829863/samples/smile.jpg"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "price": {
+            "type": "number",
+            "example": 20000
+          },
+          "qty": {
+            "type": "number",
+            "example": 25
+          },
+          "categoryId": {
+            "type": "string",
+            "example": "66e2f381abf9bf18c801c537"
+          }
+        },
+        "xml": {
+          "name": "ProductRequest"
+        }
+      },
+      "OrderRequest": {
+        "type": "object",
+        "properties": {
+          "orderItems": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Kaos Pria"
+                },
+                "productId": {
+                  "type": "string",
+                  "example": "66e437d663948f2a24baaeb2"
+                },
+                "price": {
+                  "type": "number",
+                  "example": 20000
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 1
+                }
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "OrderRequest"
+        }
+      },
       "LoginRequest": {
         "type": "object",
         "properties": {

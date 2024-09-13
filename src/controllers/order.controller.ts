@@ -14,7 +14,7 @@ async function createOrder(req: IRequestWithUser, res: Response) {
       content: {
         "application/json": {
           schema: {
-            $ref: "#/components/schemas/Order"
+            $ref: "#/components/schemas/OrderRequest"
           }
         }
       }
@@ -87,6 +87,9 @@ async function createOrder(req: IRequestWithUser, res: Response) {
 export async function findAllByUser(req: IRequestWithUser, res: Response) {
     /**
      #swagger.tags = ['Orders']
+     #swagger.security = [{
+       "bearerAuth": []
+     }]
      */   
     const userId = req.user?.id;  // Ambil ID user dari JWT payload
 

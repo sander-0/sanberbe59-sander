@@ -1,8 +1,4 @@
-/**
- * src/controllers/product.controller.ts
- */
 import { Request, Response } from "express";
-
 import {
   create,
   findAll,
@@ -21,7 +17,7 @@ export default {
      #swagger.requestBody = {
       required: true,
       schema: {
-        $ref: "#/components/schemas/ProductCreateRequest"
+        $ref: "#/components/schemas/ProductRequest"
       }
      }
      */  
@@ -88,7 +84,7 @@ export default {
      #swagger.requestBody = {
       required: true,
       schema: {
-        $ref: "#/components/schemas/ProductCreateRequest"
+        $ref: "#/components/schemas/ProductRequest"
       }
      }
     */  
