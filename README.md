@@ -179,6 +179,12 @@ SEND
 * bisa cek produk pada bagian GET /products untuk melihat produk kembali
 * barang akan berkurang sesuai yang sudah diorder
 
+CATATAN, untuk mendapat invoice order pada email anda
+- register menggunakan email aktif anda
+- lakukan login dengan email aktif anda
+- lakukan order seperti cara diatas
+invoice order anda akan dikirimkan ke email akun login anda
+
 CTRL + C untuk mematikan server
 
 

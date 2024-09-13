@@ -4,6 +4,7 @@ import OrderModel from '../models/order.model';
 import ProductModel from '../models/products.model'; 
 import UserModel from '../models/user.model';
 import { IRequestWithUser } from "../middlewares/auth.middleware";
+import mail from "../utils/mail";
 
 // Fungsi untuk membuat order baru
 async function createOrder(req: IRequestWithUser, res: Response) {
@@ -24,18 +25,15 @@ async function createOrder(req: IRequestWithUser, res: Response) {
      }]
      */
     try {
-      // Ambil data dari request body
       const { orderItems } = req.body;
       const userId = req.user?.id;
-  
+
       if (!userId) {
         return res.status(401).json({ message: 'User not authenticated' });
       }
-  
-      // Validasi dan kalkulasi grandTotal
+
       let grandTotal = 0;
-  
-      // Cek dan ambil detail produk
+
       for (const item of orderItems) {
         const product = await ProductModel.findById(item.productId);
         if (!product) {
@@ -45,13 +43,11 @@ async function createOrder(req: IRequestWithUser, res: Response) {
           return res.status(400).json({ message: `Not enough stock for product: ${item.productId}` });
         }
         grandTotal += item.price * item.quantity;
-  
-        // Kurangi stok produk
+
         product.qty -= item.quantity;
         await product.save();
       }
-  
-      // Simpan order baru
+
       const newOrder = new OrderModel({
         grandTotal,
         orderItems,
@@ -59,12 +55,29 @@ async function createOrder(req: IRequestWithUser, res: Response) {
         status: 'pending'
       });
       const savedOrder = await newOrder.save();
-  
-      // Ambil informasi pengguna
+
       const user = await UserModel.findById(userId);
       const userName = user ? user.fullName : 'Unknown';
-  
-      // Kembalikan respons
+
+      if (user && user.email) {
+        const content = await mail.render('invoice.ejs', {
+          customerName: user.fullName,
+          orderItems: savedOrder.orderItems,
+          grandTotal: savedOrder.grandTotal,
+          contactEmail: "supportsander@example.com",
+          companyName: "Toko Sander",
+          year: new Date().getFullYear(),
+        });
+
+        await mail.send({
+          to: user.email,
+          subject: "Invoice for Your Order",
+          content,
+        });
+      } else {
+        console.log("User email not found, skipping email sending.");
+      }
+
       res.status(201).json({
         message: 'Order created successfully',
         data: {
@@ -80,25 +93,22 @@ async function createOrder(req: IRequestWithUser, res: Response) {
       });
     }
   }
-  
-  export { createOrder };
 
 // Menampilkan Riwayat Order Berdasarkan Pengguna
-export async function findAllByUser(req: IRequestWithUser, res: Response) {
+async function findAllByUser(req: IRequestWithUser, res: Response) {
     /**
      #swagger.tags = ['Orders']
      #swagger.security = [{
        "bearerAuth": []
      }]
      */   
-    const userId = req.user?.id;  // Ambil ID user dari JWT payload
+    const userId = req.user?.id;  
 
     try {
         if (!userId) {
             return res.status(401).json({ message: 'User not authenticated' });
         }
- 
-        // Ambil order berdasarkan userId
+
         const orders = await OrderModel.find({ createdBy: userId });
  
         if (orders.length === 0) {
@@ -107,8 +117,7 @@ export async function findAllByUser(req: IRequestWithUser, res: Response) {
                 data: []
             });
         }
- 
-        // Kembalikan hasil dengan status 200
+
         res.status(200).json({
             message: 'Orders retrieved successfully',
             data: orders
@@ -122,3 +131,4 @@ export async function findAllByUser(req: IRequestWithUser, res: Response) {
     }
 }
  
+export { createOrder, findAllByUser };
