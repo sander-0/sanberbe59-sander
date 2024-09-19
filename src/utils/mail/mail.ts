@@ -1,6 +1,10 @@
 import nodemailer from "nodemailer";
 import ejs from "ejs";
 import path from "path";
+import{
+    USER_MAIL,
+    PASS_MAIL
+} from "../env";
 
 const transporter = nodemailer.createTransport({
     service: "Zoho",
@@ -8,8 +12,8 @@ const transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-        user: "sandervdb@zohomail.com",
-        pass: "zohoSander23",
+        user: USER_MAIL,
+        pass: PASS_MAIL,
     },
     requireTLS: true,
 });
